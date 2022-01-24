@@ -107,5 +107,6 @@ jobs:
         PYPI_PWD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         pip install numpy scipy cython
+        conda init bash
         export DOCKER_IMAGE="quay.io/pypa/manylinux2014_aarch64"
         source ./.github/workflows/upload-packages.sh          
