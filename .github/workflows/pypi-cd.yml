@@ -90,18 +90,13 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Set up conda ${{ matrix.python-version }}
-      env:
-        PYTHON: 3.8
-      shell: bash
-      run: |
-        source ./ci/install-conda.sh        
     - name: Build Wheel
       run: |
             docker run --rm -v ${{ github.workspace }}:/ws:rw --workdir=/ws \
             ${{ env.img }} \
             bash -exc '${{ env.py }} -m venv .env && \
             source .env/bin/activate && \
+            source ./ci/install-conda.sh && \
             source ./ci/reload-env.sh && \
             conda install -n test --quiet --yes -c conda-forge python=$PYTHON pyarrow && \
             pip install numpy scipy cython && \
