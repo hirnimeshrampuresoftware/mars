@@ -106,5 +106,6 @@ jobs:
         #BUILD_STATIC: 1
         PYPI_PWD: ${{ secrets.PYPI_PASSWORD }}
       run: |
+        pip install numpy
         export DOCKER_IMAGE="quay.io/pypa/manylinux2014_aarch64"
         source ./.github/workflows/upload-packages.sh          
