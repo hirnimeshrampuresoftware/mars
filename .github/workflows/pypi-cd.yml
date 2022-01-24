@@ -101,7 +101,7 @@ jobs:
             docker run --rm -v ${{ github.workspace }}:/ws:rw --workdir=/ws \
             ${{ env.img }} \
             bash -exc '${{ env.py }} -m venv .env && \
-            source .env/bin/activate && \ 
+            source .env/bin/activate && \
             source ./ci/reload-env.sh && \
             conda install -n test --quiet --yes -c conda-forge python=$PYTHON pyarrow && \
             pip install numpy scipy cython && \
