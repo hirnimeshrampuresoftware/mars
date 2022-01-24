@@ -7,7 +7,7 @@ set -e
  # echo "Not on a build config, won't deploy to pypi"
 #else
   git clean -f -x
-#  source activate test
+  source activate test
 
   python setup.py build_web
 
