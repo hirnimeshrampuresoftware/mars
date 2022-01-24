@@ -7,7 +7,11 @@ if [[ "$UNAME" == "darwin" ]]; then
   ulimit -n 1024
   CONDA_OS="MacOSX"
 elif [[ $UNAME == "linux" ]]; then
-  sudo apt-get install -y liblz4-dev
+  if [ `uname -m` == "aarch64" ]; then
+    yum install lz4-devel -y
+  else
+    sudo apt-get install -y liblz4-dev
+  fi
   CONDA_OS="Linux"
 elif [[ $UNAME == "mingw"* ]] || [[ $UNAME == "msys"* ]]; then
   CONDA_OS="Windows"
