@@ -92,7 +92,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Set up conda ${{ matrix.python-version }}
       env:
-        PYTHON: ${{ matrix.python-version }}
+        PYTHON: 3.8
       shell: bash
       run: |
         source ./ci/install-conda.sh        
