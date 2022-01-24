@@ -107,7 +107,7 @@ jobs:
         PYPI_PWD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         pip install numpy scipy cython
-        apt-get install -y wget
+        sudo apt-get install -y wget
         wget -q "https://github.com/conda-forge/miniforge/releases/download/4.11.0-0/Mambaforge-4.11.0-0-Linux-aarch64.sh"  -O miniconda.sh
         chmod +x miniconda.sh
         ./miniconda.sh -u -b -p $HOME/miniconda3
