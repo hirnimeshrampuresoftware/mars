@@ -79,6 +79,7 @@ jobs:
     env:
       py: /opt/python/${{ matrix.python-version }}/bin/python
       img: quay.io/pypa/manylinux2014_aarch64
+      PYABI: ${{ matrix.python-version }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
