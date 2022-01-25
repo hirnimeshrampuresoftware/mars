@@ -16,16 +16,10 @@ set -e
     conda activate wheel
 
     if [ `uname -m` == "aarch64" ]; then
-       pwd
-       pyabis=$(echo $PYABI | tr ":" "\n")
-       #/ws/.github/workflows/build-wheels.sh
-       for abi in $pyabis; do
-         find . -name *.so -delete
-         export PYABI=$abi
-         /ws/.github/workflows/build-wheels.sh
-         sudo chown -R $(id -u):$(id -g) ./*
-         mv dist/*.whl /tmp
-       done         
+       find . -name *.so -delete
+       /ws/.github/workflows/build-wheels.sh
+       sudo chown -R $(id -u):$(id -g) ./*
+       mv dist/*.whl /tmp
     else
        docker pull $DOCKER_IMAGE
        pyabis=$(echo $PYABI | tr ":" "\n")
