@@ -18,7 +18,7 @@ set -e
     if [ `uname -m` == "aarch64" ]; then
        find . -name *.so -delete
        /io/.github/workflows/build-wheels.sh
-       sudo chown -R $(id -u):$(id -g) ./*
+       chown -R $(id -u):$(id -g) ./*
        mv dist/*.whl /tmp
     else
        docker pull $DOCKER_IMAGE
