@@ -15,15 +15,20 @@ set -e
     conda create --quiet --yes -n wheel python=$PYTHON
     conda activate wheel
 
-    docker pull $DOCKER_IMAGE
-    pyabis=$(echo $PYABI | tr ":" "\n")
-    for abi in $pyabis; do
-      find . -name *.so -delete
-      docker run --rm -e "PYABI=$abi" -e "GIT_TAG=$GIT_TAG" -v `pwd`:/io \
-        $DOCKER_IMAGE $PRE_CMD /io/.github/workflows/build-wheels.sh
-      sudo chown -R $(id -u):$(id -g) ./*
-      mv dist/*.whl /tmp
-    done
+    if [ `uname -m` == "aarch64" ]; then
+       pwd
+       /ws/.github/workflows/build-wheels.sh 
+    else
+       docker pull $DOCKER_IMAGE
+       pyabis=$(echo $PYABI | tr ":" "\n")
+       for abi in $pyabis; do
+         find . -name *.so -delete
+         docker run --rm -e "PYABI=$abi" -e "GIT_TAG=$GIT_TAG" -v `pwd`:/io \
+           $DOCKER_IMAGE $PRE_CMD /io/.github/workflows/build-wheels.sh
+         sudo chown -R $(id -u):$(id -g) ./*
+         mv dist/*.whl /tmp
+       done 
+    fi
     mv /tmp/*.whl dist/
 
     conda activate test
