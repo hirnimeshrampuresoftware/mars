@@ -85,32 +85,17 @@ jobs:
     - name: Set up QEMU
       id: qemu
       uses: docker/setup-qemu-action@v1
-#    - name: Install dependencies
- #     run: |
-  #          docker run --rm -v ${{ github.workspace }}:/ws:rw --workdir=/ws \
-   #         ${{ env.img }} \
-    #        bash -exc '${{ env.py }} -m venv .env && \
-     #       source .env/bin/activate && \
-      #      source ./ci/install-conda.sh && \
-       #     source ./ci/reload-env.sh && \
-        #    conda install -n test --quiet --yes -c conda-forge python=$PYTHON pyarrow && \
-         #   pip install numpy scipy cython && \
-          #  pip install -e ".[dev,extra]" && \
-           # conda list -n test && \
-            #deactivate'
-    - name: Deploy packages
-     # if: startsWith(github.ref, 'refs/tags/') && matrix.no-deploy != '1'
-      shell: bash
-      env:
-        PYABI: ${{ matrix.python-version }}
-        #BUILD_STATIC: 1
-        PYPI_PWD: ${{ secrets.PYPI_PASSWORD }}
+    - name: Install dependencies
       run: |
-        pip install numpy scipy cython
-        sudo apt-get install -y wget
-        wget -q "https://github.com/conda-forge/miniforge/releases/download/4.11.0-0/Mambaforge-4.11.0-0-Linux-aarch64.sh"  -O miniconda.sh
-        chmod +x miniconda.sh
-        ./miniconda.sh -u -b -p $HOME/miniconda3
-        export PATH=$HOME/miniconda3/bin:$PATH
-        export DOCKER_IMAGE="quay.io/pypa/manylinux2014_aarch64"
-        source ./.github/workflows/upload-packages.sh          
+            docker run --rm -v ${{ github.workspace }}:/ws:rw --workdir=/ws \
+            ${{ env.img }} \
+            bash -exc '${{ env.py }} -m venv .env && \
+            source .env/bin/activate && \
+            source ./ci/install-conda.sh && \
+            source ./ci/reload-env.sh && \
+            conda install -n test --quiet --yes -c conda-forge python=$PYTHON pyarrow && \
+            pip install numpy scipy cython && \
+            pip install -e ".[dev,extra]" && \
+            conda list -n test && \
+            source ./.github/workflows/upload-packages.sh && \
+            deactivate'
