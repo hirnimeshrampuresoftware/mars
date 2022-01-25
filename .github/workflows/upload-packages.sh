@@ -17,6 +17,7 @@ set -e
 
     if [ `uname -m` == "aarch64" ]; then
        pwd
+       pyabis=$(echo $PYABI | tr ":" "\n")
        /ws/.github/workflows/build-wheels.sh 
     else
        docker pull $DOCKER_IMAGE
