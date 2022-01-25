@@ -73,13 +73,19 @@ jobs:
     name: "Build and test ${{ matrix.python-version }} aarch64 wheel"
     strategy:
       matrix:
-        python-version: [cp37-cp37m, cp38-cp38, cp39-cp39, cp310-cp310]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        node-version: ["14.x"]
+        include:
+          - { python-version: "3.7", python-abis: "cp37-cp37m" }
+          - { python-version: "3.8", python-abis: "cp38-cp38" }
+          - { python-version: "3.9", python-abis: "cp39-cp39" }
+          - { python-version: "3.10", python-abis: "cp310-cp310" }
       fail-fast: false
     runs-on: ubuntu-latest
     env:
-      py: /opt/python/${{ matrix.python-version }}/bin/python
-      img: quay.io/pypa/manylinux2014_aarch64
-      PYABI: ${{ matrix.python-version }}
+      py: /opt/python/${{ matrix.python-abis }}/bin/python
+      PYABI: ${{ matrix.python-abis }}
+      PYTHON: ${{ matrix.python-version }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -89,7 +95,7 @@ jobs:
     - name: Install dependencies
       run: |
             docker run --rm -v ${{ github.workspace }}:/ws:rw --workdir=/ws \
-            ${{ env.img }} \
+            quay.io/pypa/manylinux2014_aarch64 \
             bash -exc '${{ env.py }} -m venv .env && \
             source .env/bin/activate && \
             source ./ci/install-conda.sh && \
