@@ -17,7 +17,7 @@ set -e
 
     if [ `uname -m` == "aarch64" ]; then
        find . -name *.so -delete
-       /ws/.github/workflows/build-wheels.sh
+       /io/.github/workflows/build-wheels.sh
        sudo chown -R $(id -u):$(id -g) ./*
        mv dist/*.whl /tmp
     else
