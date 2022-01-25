@@ -25,12 +25,13 @@ TEST_PACKAGES="virtualenv"
 if [[ "$FILE_EXT" == "sh" ]]; then
   if [ `uname -m` == "aarch64" ]; then
     curl -L -o "miniconda.sh" https://github.com/conda-forge/miniforge/releases/download/4.11.0-0/Mambaforge-4.11.0-0-Linux-aarch64.sh
-    chmod +x miniconda.sh
-    ./miniconda.sh -u -b -p $HOME/miniconda
+   # chmod +x miniconda.sh
+    #./miniconda.sh -u -b -p $HOME/miniconda
   else
     curl -L -o "miniconda.${FILE_EXT}" https://repo.continuum.io/miniconda/$CONDA_FILE
-    bash miniconda.sh -b -p $HOME/miniconda && rm -f miniconda.* 
+    #bash miniconda.sh -b -p $HOME/miniconda && rm -f miniconda.* 
   fi
+  bash miniconda.sh -b -p $HOME/miniconda && rm -f miniconda.* 
   CONDA_BIN_PATH=$HOME/miniconda/bin
   TEST_PACKAGES="$TEST_PACKAGES nomkl libopenblas"
   export PATH="$HOME/miniconda/envs/test/bin:$HOME/miniconda/bin:$PATH"
