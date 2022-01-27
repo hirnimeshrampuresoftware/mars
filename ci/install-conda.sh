@@ -7,11 +7,7 @@ if [[ "$UNAME" == "darwin" ]]; then
   ulimit -n 1024
   CONDA_OS="MacOSX"
 elif [[ $UNAME == "linux" ]]; then
- # if [ `uname -m` == "aarch64" ]; then
-  #  yum install lz4-devel -y
-  #else
-    sudo apt-get install -y liblz4-dev
-  #fi
+  sudo apt-get install -y liblz4-dev
   CONDA_OS="Linux"
 elif [[ $UNAME == "mingw"* ]] || [[ $UNAME == "msys"* ]]; then
   CONDA_OS="Windows"
@@ -24,12 +20,10 @@ TEST_PACKAGES="virtualenv"
 
 if [[ "$FILE_EXT" == "sh" ]]; then
   if [ `uname -m` == "aarch64" ]; then
-    curl -L -o "miniconda.sh" https://github.com/conda-forge/miniforge/releases/download/4.11.0-0/Mambaforge-4.11.0-0-Linux-aarch64.sh
-   # chmod +x miniconda.sh
-    #./miniconda.sh -u -b -p $HOME/miniconda
+    curl -L -o "miniconda.sh" https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh
+    #https://github.com/conda-forge/miniforge/releases/download/4.11.0-0/Mambaforge-4.11.0-0-Linux-aarch64.sh
   else
     curl -L -o "miniconda.${FILE_EXT}" https://repo.continuum.io/miniconda/$CONDA_FILE
-    #bash miniconda.sh -b -p $HOME/miniconda && rm -f miniconda.* 
   fi
   bash miniconda.sh -b -p $HOME/miniconda && rm -f miniconda.* 
   CONDA_BIN_PATH=$HOME/miniconda/bin
