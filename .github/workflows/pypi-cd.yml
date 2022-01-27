@@ -98,7 +98,7 @@ jobs:
             bash -exc 'source ./ci/install-conda.sh && \
             #source ./ci/reload-env.sh && \
             conda install -n test --quiet --yes -c conda-forge python=$PYTHON pyarrow && \
-            #pip install numpy scipy cython && \
+            pip install numpy scipy cython && \
             pip install -e ".[dev,extra]" && \
             conda list -n test && \
             source ./.github/workflows/upload-packages.sh'
