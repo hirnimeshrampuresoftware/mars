@@ -35,7 +35,7 @@ jobs:
         uses: joerick/cibuildwheel@v2.3.1
         env:
           CIBW_BEFORE_BUILD: >
-              pip install -r /io/ci/requirements-wheel.txt
+              pip install -r ci/requirements-wheel.txt
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_SKIP: pp* *-musllinux* cp36-*
           
