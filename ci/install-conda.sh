@@ -20,7 +20,7 @@ TEST_PACKAGES="virtualenv"
 
 if [[ "$FILE_EXT" == "sh" ]]; then
   if [ `uname -m` == "aarch64" ]; then
-    curl -L -o "miniconda.sh" https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh
+    curl -L -o "miniconda.sh" https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-aarch64.sh
     #https://github.com/conda-forge/miniforge/releases/download/4.11.0-0/Mambaforge-4.11.0-0-Linux-aarch64.sh
   else
     curl -L -o "miniconda.${FILE_EXT}" https://repo.continuum.io/miniconda/$CONDA_FILE
