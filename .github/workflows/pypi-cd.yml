@@ -38,6 +38,7 @@ jobs:
               source ./ci/install-conda.sh 
               setuptools wheel coverage
               source ./ci/reload-env.sh
+              pip install -r /io/ci/requirements-wheel.txt
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_SKIP: pp* *-musllinux* cp36-*
           
