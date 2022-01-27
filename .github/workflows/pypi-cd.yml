@@ -37,7 +37,7 @@ jobs:
           CIBW_BEFORE_BUILD: >
               pip install -r ci/requirements-wheel.txt
           CIBW_ARCHS: ${{ matrix.arch }}
-          CIBW_SKIP: pp* *-musllinux* cp36-*
+          CIBW_SKIP: pp* *-musllinux* cp36-* *-win32 *_i686 
           
       - uses: actions/upload-artifact@v2
         with:
