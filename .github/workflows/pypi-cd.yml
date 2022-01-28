@@ -9,11 +9,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        arch: [auto]
+        os: [ubuntu-latest]
+        arch: [x86_64, aarch64]
         include:
-          - os: ubuntu-latest
-            arch: aarch64
+          - os: windows-latest
+            arch: amd64
           - os: macOS-latest
             arch: universal2            
 
@@ -35,7 +35,7 @@ jobs:
           CIBW_BEFORE_BUILD: >
               pip install -r ci/requirements-wheel.txt
           CIBW_ARCHS: ${{ matrix.arch }}
-          CIBW_SKIP: pp* *-musllinux* cp36-* *-win32 *_i686 
+          CIBW_SKIP: pp* *-musllinux* cp36-*
           
       - uses: actions/upload-artifact@v2
         with:
