@@ -36,7 +36,7 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }} && ${{ matrix.arch == 'x86_64' }}
         run: |
           #python -m pip install -r ci/requirements-wheel.txt
-          python -m pip install numpy cython
+          python -m pip install numpy scipy cython
           python setup.py sdist --dist-dir=wheelhouse
       - name: Release to pypi
         if: startsWith(github.ref, 'refs/tags/')
