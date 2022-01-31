@@ -1,6 +1,9 @@
-name: Mars CD for PyPI
+name: Mars cibuildwheel
 
-on: [push]
+on:
+  push:
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -10,12 +13,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
-        #arch: [x86_64, aarch64]
-        #include:
-         # - os: windows-latest
-          #  arch: AMD64
-          #- os: macOS-latest
-          #  arch: universal2            
+        arch: [x86_64, aarch64]
+        include:
+          - os: windows-latest
+            arch: AMD64
+          - os: macOS-latest
+            arch: universal2            
 
     steps:
       - name: Check out code
@@ -29,10 +32,7 @@ jobs:
         uses: joerick/cibuildwheel@v2.3.1
         env:
           CIBW_BEFORE_BUILD: pip install -r ci/requirements-wheel.txt
-          CIBW_ARCHS_LINUX: x86_64 aarch64
-          CIBW_ARCHS_WINDOWS: AMD64
-          CIBW_ARCHS_MACOS: universal2
-          #CIBW_ARCHS: ${{ matrix.arch }}
+          CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_SKIP: pp* *-musllinux* cp36-*
           
       - name: Build source
