@@ -33,7 +33,7 @@ jobs:
           CIBW_SKIP: pp* *-musllinux* cp36-*
           
       - name: Build source
-        if: startsWith(matrix.os, 'ubuntu' && matrix.arch, 'x86_64')
+        if: ${{ matrix.os == 'ubuntu-latest' }} && ${{ matrix.arch == 'x86_64' }}
         run: |
           python -m pip install -r ci/requirements-wheel.txt
           python setup.py sdist --dist-dir=wheelhouse
