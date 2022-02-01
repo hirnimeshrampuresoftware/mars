@@ -14,7 +14,7 @@ jobs:
         include:
           - os: windows-latest
             arch: AMD64 x86
-          - os: macOS-latest
+          - os: macos-latest
             arch: universal2 x86_64           
 
     steps:
