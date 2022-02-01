@@ -49,7 +49,7 @@ jobs:
         run: |
           echo ""
           echo "Generated files:"
-          ls dist/
+          ls wheelhouse/
           echo ""
           echo "gharepo=$GITHUB_REPOSITORY"
           if ( "$GITHUB_REPOSITORY" == "mars-project/mars" ); then
