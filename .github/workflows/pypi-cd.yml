@@ -32,7 +32,7 @@ jobs:
           CIBW_SKIP: pp* *-musllinux* cp36-*
         run: |
           python -m pip install --upgrade pip setuptools
-          pip install cibuildwheel
+          pip install cibuildwheel==2.3.1
           cibuildwheel --output-dir wheelhouse          
           
       - name: Build source
