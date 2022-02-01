@@ -47,7 +47,7 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.pypi_password }}
         run: |
-          if [[ "$GITHUB_REPOSITORY" == "mars-project/mars" ]]; then
+          if [ "$GITHUB_REPOSITORY" == "mars-project/mars" ]; then
             PYPI_REPO="https://upload.pypi.org/legacy/"
           else
             PYPI_REPO="https://test.pypi.org/legacy/"
