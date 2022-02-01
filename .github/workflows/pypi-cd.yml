@@ -52,9 +52,9 @@ jobs:
           ls wheelhouse/
           echo ""
           echo "gharepo=$GITHUB_REPOSITORY"
-          if ("$GITHUB_REPOSITORY" == "mars-project/mars"):
+          if ("$GITHUB_REPOSITORY" == "mars-project/mars")
             PYPI_REPO="https://upload.pypi.org/legacy/"
-          else:
+          else
             PYPI_REPO="https://test.pypi.org/legacy/"
           fi
           echo "pypirepo=$PYPI_REPO"          
