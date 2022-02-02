@@ -64,8 +64,10 @@ set -e
 
   if [[ "$GITHUB_REPOSITORY" == "mars-project/mars" ]]; then
     PYPI_REPO="https://upload.pypi.org/legacy/"
+    echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
   else
     PYPI_REPO="https://test.pypi.org/legacy/"
+    echo "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
   fi
 
   echo "[distutils]"             > ~/.pypirc
