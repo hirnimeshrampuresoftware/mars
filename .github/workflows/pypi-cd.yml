@@ -41,23 +41,19 @@ jobs:
         run: |
           python -m pip install numpy scipy cython
           python setup.py sdist --dist-dir=wheelhouse
-      - name: Release to pypi
-        #if: startsWith(github.ref, 'refs/tags/')
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.pypi_password }}
+          
+      - name: Set path to upload wheels
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           echo ""
           echo "Generated files:"
           ls wheelhouse/
           echo ""
           echo "gharepo=$GITHUB_REPOSITORY"
-          if [[ $matrix.os != 'windows-latest' ]]; then
-            if [[ "$GITHUB_REPOSITORY" == "mars-project/mars" ]]; then
-              PYPI_REPO="https://upload.pypi.org/legacy/"
-            else
-              PYPI_REPO="https://test.pypi.org/legacy/"
-            fi
+          if [[ "$GITHUB_REPOSITORY" == "mars-project/mars" ]]; then
+            PYPI_REPO="https://upload.pypi.org/legacy/"
+          else
+            PYPI_REPO="https://test.pypi.org/legacy/"
           fi
           echo "pypirepo=$PYPI_REPO"          
           echo "[distutils]"             > ~/.pypirc
@@ -67,6 +63,17 @@ jobs:
           echo "repository=$PYPI_REPO"  >> ~/.pypirc
           echo "username=pyodps"        >> ~/.pypirc
           echo "password=$PYPI_PWD"     >> ~/.pypirc
+          
+      - name: Release to pypi
+        #if: startsWith(github.ref, 'refs/tags/')
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.pypi_password }}
+        run: |
+          echo "Generated files:"
+          ls wheelhouse/
+          echo ""
+          echo "gharepo=$GITHUB_REPOSITORY"
           python -m pip install twine
           python -m twine upload -r pypi --skip-existing wheelhouse/*
         
