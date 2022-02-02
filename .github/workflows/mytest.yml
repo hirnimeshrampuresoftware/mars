@@ -1,9 +1,6 @@
 name: Mars CD for PyPI
 
-on:
-  push:
-    tags:
-      - '*'
+on: [push]
 
 jobs:
   build:
