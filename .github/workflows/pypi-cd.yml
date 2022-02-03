@@ -85,7 +85,6 @@ jobs:
           }
           
           echo "[distutils]"             > ~/.pypirc
-          echo "index-servers ="        >> ~/.pypirc
           echo "    pypi"               >> ~/.pypirc
           echo "[pypi]"                 >> ~/.pypirc
           echo "repository=$PYPI_REPO"  >> ~/.pypirc
