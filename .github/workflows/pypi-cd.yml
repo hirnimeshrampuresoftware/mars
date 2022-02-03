@@ -85,7 +85,6 @@ jobs:
           }
           
           echo "[distutils]"             > ~/.pypirc
-          echo "    pypi"               >> ~/.pypirc
           echo "[pypi]"                 >> ~/.pypirc
           echo "repository=$PYPI_REPO"  >> ~/.pypirc
           echo "username=pyodps"        >> ~/.pypirc
