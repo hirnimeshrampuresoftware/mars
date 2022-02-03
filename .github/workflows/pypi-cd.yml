@@ -75,6 +75,9 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.pypi_password }}
         run: >-
+          echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+          echo "$PYPI_REPO"
+          
           if ( "$GITHUB_REPOSITORY" -eq "mars-project/mars" ) {
             PYPI_REPO="https://upload.pypi.org/legacy/"
           } else {
@@ -84,15 +87,6 @@ jobs:
           echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
           echo "$PYPI_REPO"
           
-          echo "[distutils]"             > ~/.pypirc
-          echo "index-servers ="        >> ~/.pypirc
-          echo "    pypi"               >> ~/.pypirc
-          echo "[pypi]"                 >> ~/.pypirc
-          echo "repository=$PYPI_REPO"  >> ~/.pypirc
-          echo "username=pyodps"        >> ~/.pypirc
-          echo "password=$PYPI_PWD"     >> ~/.pypirc          
-          echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-          echo "$PYPI_REPO"
           python -m pip install twine
           python -m twine upload -r pypi --skip-existing wheelhouse/*
 
