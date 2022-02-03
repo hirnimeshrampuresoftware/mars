@@ -63,7 +63,7 @@ jobs:
           echo "[pypi]"                 >> ~/.pypirc
           echo "repository=$PYPI_REPO"  >> ~/.pypirc
           echo "username=pyodps"        >> ~/.pypirc
-          echo "password=$PYPI_PWD"     >> ~/.pypirc          
+          echo "password=$PYPI_PWD"     >> ~/.pypirc
           echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
           echo "$PYPI_REPO"
           python -m pip install twine
@@ -84,6 +84,13 @@ jobs:
             PYPI_REPO="https://test.pypi.org/legacy/"
           }
           
+          echo "[distutils]"             > ~/.pypirc
+          echo "index-servers ="        >> ~/.pypirc
+          echo "    pypi"               >> ~/.pypirc
+          echo "[pypi]"                 >> ~/.pypirc
+          echo "repository=$PYPI_REPO"  >> ~/.pypirc
+          echo "username=pyodps"        >> ~/.pypirc
+          echo "password=$PYPI_PWD"     >> ~/.pypirc
           echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
           echo "$PYPI_REPO"
           
