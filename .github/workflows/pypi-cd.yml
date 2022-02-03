@@ -34,7 +34,7 @@ jobs:
         env:
           CIBW_BEFORE_BUILD: pip install -r ci/requirements-wheel.txt
           CIBW_ARCHS: ${{ matrix.arch }}
-          CIBW_SKIP: pp* *-musllinux* cp36-* cp310-win32
+          CIBW_SKIP: pp* *-musllinux* cp36-* cp310-win32 *i686
           
       - name: Build source
         if: ${{ matrix.os == 'windows-latest' }}
