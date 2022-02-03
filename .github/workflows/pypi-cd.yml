@@ -50,14 +50,6 @@ jobs:
           else
             PYPI_REPO="https://test.pypi.org/legacy/"
           fi
-          echo "pypirepo=$PYPI_REPO"          
-          echo "[distutils]"             > ~/.pypirc
-          echo "index-servers ="        >> ~/.pypirc
-          echo "    pypi"               >> ~/.pypirc
-          echo "[pypi]"                 >> ~/.pypirc
-          echo "repository=$PYPI_REPO"  >> ~/.pypirc
-          echo "username=pyodps"        >> ~/.pypirc
-          echo "password=$PYPI_PWD"     >> ~/.pypirc
           
       - name: Release to pypi
         #if: startsWith(github.ref, 'refs/tags/')
@@ -65,6 +57,14 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.pypi_password }}
         run: |
+          echo "[distutils]"             > ~/.pypirc
+          echo "index-servers ="        >> ~/.pypirc
+          echo "    pypi"               >> ~/.pypirc
+          echo "[pypi]"                 >> ~/.pypirc
+          echo "repository=$PYPI_REPO"  >> ~/.pypirc
+          echo "username=pyodps"        >> ~/.pypirc
+          echo "password=$PYPI_PWD"     >> ~/.pypirc
+        
           python -m pip install twine
           python -m twine upload -r pypi --skip-existing wheelhouse/*
         
