@@ -42,9 +42,13 @@ jobs:
           python -m pip install numpy scipy cython
           python setup.py sdist --dist-dir=wheelhouse
           
-      - name: Set path to upload wheels
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
+      - name: Release to pypi ubuntu and macos
+        if: runner.os != 'Windows' && startsWith(github.ref, 'refs/tags/')
+        #if: startsWith(github.ref, 'refs/tags/')
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.pypi_password }}
+        run: |        
           if [[ "$GITHUB_REPOSITORY" == "mars-project/mars" ]]; then
             PYPI_REPO="https://upload.pypi.org/legacy/"
           else
@@ -59,22 +63,38 @@ jobs:
           echo "[pypi]"                 >> ~/.pypirc
           echo "repository=$PYPI_REPO"  >> ~/.pypirc
           echo "username=pyodps"        >> ~/.pypirc
-          echo "password=$PYPI_PWD"     >> ~/.pypirc
-          
-          echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-          echo "$PYPI_REPO"
-          
-      - name: Release to pypi
-        #if: startsWith(github.ref, 'refs/tags/')
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.pypi_password }}
-        run: |        
+          echo "password=$PYPI_PWD"     >> ~/.pypirc          
           echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
           echo "$PYPI_REPO"
           python -m pip install twine
           python -m twine upload -r pypi --skip-existing wheelhouse/*
-        
+
+      - name: Release to pypi windows
+        if: runner.os == 'Windows'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.pypi_password }}
+        run: |        
+          if [[ "$GITHUB_REPOSITORY" == "mars-project/mars" ]]; then
+            PYPI_REPO="https://upload.pypi.org/legacy/"
+          else
+            PYPI_REPO="https://test.pypi.org/legacy/"
+          fi
+          echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+          echo "$PYPI_REPO"
+          
+          echo "[distutils]"             > ~/.pypirc
+          echo "index-servers ="        >> ~/.pypirc
+          echo "    pypi"               >> ~/.pypirc
+          echo "[pypi]"                 >> ~/.pypirc
+          echo "repository=$PYPI_REPO"  >> ~/.pypirc
+          echo "username=pyodps"        >> ~/.pypirc
+          echo "password=$PYPI_PWD"     >> ~/.pypirc          
+          echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+          echo "$PYPI_REPO"
+          python -m pip install twine
+          python -m twine upload -r pypi --skip-existing wheelhouse/*
+
       - name: Upload artifacts to github
         uses: actions/upload-artifact@v1
         with:
