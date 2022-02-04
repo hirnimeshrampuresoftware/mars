@@ -4,7 +4,7 @@ set -e
 
   echo ""
   echo "Generated files:"
-  ls dist/
+  ls wheelhouse/
   echo ""
 
   if [[ "$GITHUB_REPOSITORY" == "mars-project/mars" ]]; then
@@ -24,5 +24,5 @@ set -e
   echo "password=$PYPI_PWD"     >> ~/.pypirc
 
   python -m pip install twine
-  python -m twine upload -r pypi --skip-existing dist/*
+  python -m twine upload -r pypi --skip-existing wheelhouse/*
 fi
