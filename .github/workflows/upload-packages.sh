@@ -1,61 +1,6 @@
 #!/bin/bash
 set -e
 
-#if [ -z "$GITHUB_TAG_REF" ]; then
- # echo "Not on a tag, won't deploy to pypi"
-#elif [ -n "$NO_DEPLOY" ]; then
- # echo "Not on a build config, won't deploy to pypi"
-#else
-  git clean -f -x
-  source activate test
-
-  python setup.py build_web
-
-  if [ "$UNAME" = "linux" ]; then
-    conda create --quiet --yes -n wheel python=$PYTHON
-    conda activate wheel
-
-    if [ `uname -m` == "aarch64" ]; then
-       find . -name *.so -delete
-       /io/.github/workflows/build-wheels.sh
-       chown -R $(id -u):$(id -g) ./*
-       mv dist/*.whl /tmp
-    else
-       docker pull $DOCKER_IMAGE
-       pyabis=$(echo $PYABI | tr ":" "\n")
-       for abi in $pyabis; do
-         find . -name *.so -delete
-         docker run --rm -e "PYABI=$abi" -e "GIT_TAG=$GIT_TAG" -v `pwd`:/io \
-           $DOCKER_IMAGE $PRE_CMD /io/.github/workflows/build-wheels.sh
-         sudo chown -R $(id -u):$(id -g) ./*
-         mv dist/*.whl /tmp
-       done 
-    fi
-    mv /tmp/*.whl dist/
-
-    conda activate test
-  else
-    conda create --quiet --yes -n wheel python=$PYTHON
-    conda activate wheel
-
-    pip install -r ci/requirements-wheel.txt
-    pip wheel --no-deps .
-
-    conda activate test
-
-    mkdir -p dist
-    cp *.whl dist/
-
-    if [[ "$UNAME" == "darwin" ]]; then
-      pip install delocate==0.8.2
-      delocate-wheel dist/*.whl
-      delocate-addplat --rm-orig -x 10_9 -x 10_10 dist/*.whl
-    fi
-  fi
-
-  if [ -n "$BUILD_STATIC" ]; then
-    python setup.py sdist --formats=gztar
-  fi
 
   echo ""
   echo "Generated files:"
