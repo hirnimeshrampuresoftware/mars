@@ -49,6 +49,7 @@ jobs:
         run: |
           echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
           echo "$PYPI_REPO"
+          python -m pip install numpy scipy cython
           source ./.github/workflows/upload-packages.sh 
 
       - name: Upload artifacts to github
