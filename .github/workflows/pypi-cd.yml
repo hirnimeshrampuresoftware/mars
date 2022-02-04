@@ -43,6 +43,7 @@ jobs:
           python setup.py sdist --dist-dir=wheelhouse
                  
       - name: Release to pypi
+        shell: bash
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.pypi_password }}
