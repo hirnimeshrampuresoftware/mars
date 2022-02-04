@@ -49,6 +49,7 @@ jobs:
         run: |
           echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
           echo "$PYPI_REPO"
+          source ./ci/reload-env.sh
           source ./.github/workflows/upload-packages.sh 
 
       - name: Upload artifacts to github
