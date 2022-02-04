@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+  python setup.py build_web
 
   echo ""
   echo "Generated files:"
