@@ -42,12 +42,9 @@ jobs:
           python -m pip install numpy scipy cython
           python setup.py sdist --dist-dir=wheelhouse
           
-      - name: Release to pypi ubuntu and macos
-        if: runner.os != 'Windows' && startsWith(github.ref, 'refs/tags/')
+      - name: Set path (ubuntu and macos)
+        if: runner.os != 'Windows'
         #if: startsWith(github.ref, 'refs/tags/')
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.pypi_password }}
         run: |        
           if [[ "$GITHUB_REPOSITORY" == "mars-project/mars" ]]; then
             PYPI_REPO="https://upload.pypi.org/legacy/"
@@ -56,38 +53,24 @@ jobs:
           fi
           echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
           echo "$PYPI_REPO"
-          
-          echo "[distutils]"             > ~/.pypirc
-          echo "index-servers ="        >> ~/.pypirc
-          echo "    pypi"               >> ~/.pypirc
-          echo "[pypi]"                 >> ~/.pypirc
-          echo "repository=$PYPI_REPO"  >> ~/.pypirc
-          echo "username=pyodps"        >> ~/.pypirc
-          echo "password=$PYPI_PWD"     >> ~/.pypirc
-          echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-          echo "$PYPI_REPO"
-          python -m pip install twine
-          python -m twine upload -r pypi --skip-existing wheelhouse/*
 
-      - name: Release to pypi windows
+      - name: Set path (windows)
         if: runner.os == 'Windows'
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.pypi_password }}
-        run: >-
-          echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-          echo "$PYPI_REPO"
-          
+        #if: startsWith(github.ref, 'refs/tags/')
+        run: >
           if ( "$GITHUB_REPOSITORY" -eq "mars-project/mars" ) {
             PYPI_REPO="https://upload.pypi.org/legacy/"
           } else {
             PYPI_REPO="https://test.pypi.org/legacy/"
           }
           
-          echo "[distutils]"             > ~/.pypirc
-          
+      - name: Release to pypi
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.pypi_password }}
+        run: |
+          echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
           echo "$PYPI_REPO"
-          
           python -m pip install twine
           python -m twine upload -r pypi --skip-existing wheelhouse/*
 
