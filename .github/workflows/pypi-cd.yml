@@ -85,8 +85,7 @@ jobs:
           }
           
           echo "[distutils]"             > ~/.pypirc
-          echo "password=$PYPI_PWD"     >> ~/.pypirc
-          echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+          
           echo "$PYPI_REPO"
           
           python -m pip install twine
