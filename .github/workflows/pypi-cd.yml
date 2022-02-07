@@ -32,7 +32,7 @@ jobs:
           CIBW_BEFORE_BUILD: pip install -r ci/requirements-wheel.txt
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_SKIP: pp* *-musllinux* cp36-* cp310-win32 *i686
-          CIBW_MANYLINUX_X86_64_IMAGE: manylinux1 manylinux2014
+          CIBW_MANYLINUX_X86_64_IMAGE: manylinux1
           CIBW_MANYLINUX_AARCH64_IMAGE: manylinux2014
 
       - name: Build source
