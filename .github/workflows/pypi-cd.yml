@@ -32,6 +32,8 @@ jobs:
           CIBW_BEFORE_BUILD: pip install -r ci/requirements-wheel.txt
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_SKIP: pp* *-musllinux* cp36-* cp310-win32 *i686
+          CIBW_MANYLINUX_X86_64_IMAGE: manylinux1
+          CIBW_MANYLINUX_AARCH64_IMAGE: manylinux2014
 
       - name: Build source
         if: ${{ matrix.os == 'windows-latest' }}
@@ -41,8 +43,7 @@ jobs:
       - name: Release to pypi
         shell: bash
         env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.pypi_password }}
+          PYPI_PWD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           if [[ "$GITHUB_REPOSITORY" == "mars-project/mars" ]]; then
             PYPI_REPO="https://upload.pypi.org/legacy/"
