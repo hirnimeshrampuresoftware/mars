@@ -29,7 +29,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.3.1
         env:
-          CIBW_BEFORE_BUILD: pip install -r ci/requirements-wheel.txt && uname -m
+          CIBW_BEFORE_BUILD: uname -m
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_SKIP: pp* *-musllinux* cp36-* cp310-win32 *i686 cp310-manylinux_x86_64
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux1
