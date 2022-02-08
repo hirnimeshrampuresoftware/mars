@@ -46,9 +46,9 @@ jobs:
       - name: Build source
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          python -m pep518.build --source .
-          #python setup.py sdist
-          #--formats=gztar --dist-dir=wheelhouse
+          pip install build
+          python -m build --sdist
+          #python setup.py sdist --formats=gztar --dist-dir=wheelhouse
           
       - name: Release to pypi
         shell: bash
