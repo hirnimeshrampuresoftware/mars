@@ -36,7 +36,7 @@ jobs:
           CIBW_MANYLINUX_AARCH64_IMAGE: manylinux2014
           
       - name: Build wheels(Python 3.10 x86_64)
-        if: ${{ matrix.os == 'ubuntu-latest' }} && ${{ matrix.arch == 'auto' }}
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.arch == 'auto'}}
         uses: pypa/cibuildwheel@v2.3.1
         env:
           CIBW_BEFORE_BUILD: pip install -r ci/requirements-wheel.txt
