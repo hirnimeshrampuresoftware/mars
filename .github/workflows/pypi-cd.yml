@@ -46,7 +46,8 @@ jobs:
       - name: Build source
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          python setup.py sdist --formats=gztar --dist-dir=wheelhouse
+          python setup.py sdist
+          #--formats=gztar --dist-dir=wheelhouse
           
       - name: Release to pypi
         shell: bash
